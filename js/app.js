@@ -49,6 +49,8 @@ const noOfResults = results => {
 
 const displayData = phones => {
     noOfResults(phones);
+    toggleSpinner('none');
+    toggleSearchresult('flex');
 
     const phoneDisplay = document.getElementById('phones');
     phoneDisplay.textContent='';
@@ -56,9 +58,9 @@ const displayData = phones => {
     phones?.forEach(phone => {
         
         const div = document.createElement('div');
-        div.classList.add('col');
+        div.classList.add("col-lg-4");
       
-        div.innerHTML = ` <div class="card">
+        div.innerHTML = `<div class="card">
         <img src="${phone.image}" class="card-img-top w-75 p-2" alt="...">
         <div class="card-body">
           <h5 class="card-title">${phone.brand}</h5>
@@ -71,8 +73,7 @@ const displayData = phones => {
         phoneDisplay.appendChild(div);
 
     })
-    toggleSpinner('none');
-    toggleSearchresult('block');
+   
 }
 
 const loadPhoneData=id=>{
