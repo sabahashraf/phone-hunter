@@ -24,10 +24,9 @@ const noOfResults = results => {
    
 
 }
+//loading all phones data
 
-
-
-const loadData = () => {
+const loadAllPhoneData = () => {
     const seachInput = document.getElementById('search-input');
     const searchText = seachInput.value.toLowerCase();
     toggleSpinner('block');
@@ -47,15 +46,16 @@ const loadData = () => {
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
     fetch(url)
         .then(res => res.json())
-        .then(data => displayData(data.data));
+        .then(data => displayAllPhone(data.data));
     seachInput.value = '';
     const noResult = document.getElementById('no-result');
     noResult.textContent = '';
     }
 }
 
+//displaying 20 phones
 
-const displayData = phones => {
+const displayAllPhone = phones => {
     noOfResults(phones);
     toggleSpinner('none');
     toggleSearchresult('flex');
@@ -77,7 +77,7 @@ const phoneOnPage=phones.slice(0,20);
         <div class="card-body">
           <h5 class="card-title">${phone.brand}</h5>
           <p class="card-text">${phone.phone_name}</p>
-          <button type="button" class="btn btn-success"  onclick="loadPhoneData('${
+          <button type="button" class="btn btn-success"  onclick="loadSinglePhoneData('${
             phone.slug
           }')">More Details</button>
         </div>
@@ -87,34 +87,26 @@ const phoneOnPage=phones.slice(0,20);
 
     })
    
-    
-
-     
-     
-    
-        
-       
-        
+  
         
     }
 
-     
-
 
    
+//loading single phone data
 
 
 
-
-const loadPhoneData=id=>{
+const loadSinglePhoneData=id=>{
     const url = `https://openapi.programming-hero.com/api/phone/${id}`;
     fetch(url)
         .then(res => res.json())
-        .then(data => displayPhoneDetails(data.data));
+        .then(data => displaySinglePhoneDetails(data.data));
     
 }
+//displaying single phone details
 
-const displayPhoneDetails = details =>{
+const displaySinglePhoneDetails = details =>{
     console.log(details);
     const parentDetailsContainer = document.getElementById("modal-dialog-box");
     parentDetailsContainer.textContent = "";
