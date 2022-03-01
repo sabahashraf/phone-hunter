@@ -11,6 +11,20 @@ const toggleSearchresult=(show)=>{
 
 }
 
+const singlePhoneResult=(show)=>{
+    const spinner = document.getElementById('modal-dialog-box');
+    spinner.style.display=show;
+
+}
+const noOfResults = results => {
+    const noResult = document.getElementById('no-result');
+    const p = document.createElement('p');
+    p.innerText = `${results.length} results found`;
+    noResult.appendChild(p);
+   
+
+}
+
 
 
 const loadData = () => {
@@ -18,6 +32,7 @@ const loadData = () => {
     const searchText = seachInput.value.toLowerCase();
     toggleSpinner('block');
     toggleSearchresult('none');
+    singlePhoneResult('none');
     if (searchText == "") {
       
         const noResult = document.getElementById('no-result');
@@ -38,29 +53,26 @@ const loadData = () => {
     noResult.textContent = '';
     }
 }
-const noOfResults = results => {
-    const noResult = document.getElementById('no-result');
-    const p = document.createElement('p');
-    p.innerText = `${results.length} results found`;
-    noResult.appendChild(p);
-   
 
-}
 
 const displayData = phones => {
     noOfResults(phones);
     toggleSpinner('none');
     toggleSearchresult('flex');
 
+const phoneOnPage=phones.slice(0,20);
+
+
     const phoneDisplay = document.getElementById('phones');
     phoneDisplay.textContent='';
+
     
-    phones?.forEach(phone => {
+    phoneOnPage.forEach(phone => {
         
         const div = document.createElement('div');
         div.classList.add("col-lg-4");
       
-        div.innerHTML = `<div class="card">
+        div.innerHTML = `<div class="card shadow border-0">
         <img src="${phone.image}" class="card-img-top w-75 p-2" alt="...">
         <div class="card-body">
           <h5 class="card-title">${phone.brand}</h5>
@@ -69,12 +81,30 @@ const displayData = phones => {
             phone.slug
           }')">More Details</button>
         </div>
-      </div>`;
+      </div>
+      `;
         phoneDisplay.appendChild(div);
 
     })
    
-}
+    
+
+     
+     
+    
+        
+       
+        
+        
+    }
+
+     
+
+
+   
+
+
+
 
 const loadPhoneData=id=>{
     const url = `https://openapi.programming-hero.com/api/phone/${id}`;
@@ -100,14 +130,14 @@ const displayPhoneDetails = details =>{
           <div class="card-body text-start">
           <h3 class="card-title">${details.name}</h3>
           <p>Release Date:${details.releaseDate ? details.releaseDate :'not available' }</p>
-          <p>Main Features</p>
+          <h5 class="fw-bold">Main Features:</h5>
           <p>
-Storage:${details.mainFeatures.storage},
-Display-size:${details.mainFeatures.displaySize},
-Chip-set:${details.mainFeatures.chipSet},
-Memory:${details.mainFeatures.memory}
+<span class="fw-bold">Storage:</span>${details.mainFeatures.storage},
+<span class="fw-bold">Display-size:</span>${details.mainFeatures.displaySize},
+<span class="fw-bold">Chip-set:</span>${details.mainFeatures.chipSet},
+<span class="fw-bold">Memory:</span>${details.mainFeatures.memory}
 </p>
-<p>Sensors:</p>
+<h5 class="fw-bold">Sensors:</h5>
 <p>
 
 ${details.mainFeatures.sensors[0] ? details.mainFeatures.sensors[0] :'not available'},
@@ -117,15 +147,15 @@ ${details.mainFeatures.sensors[3] ? details.mainFeatures.sensors[3] :'not availa
 ${details.mainFeatures.sensors[4] ? details.mainFeatures.sensors[4] :'not available'},
 ${details.mainFeatures.sensors[5] ? details.mainFeatures.sensors[5] :'not available'}
 </p>
-<p>Other Features:</p>
+<h5 class="fw-bold">Other Features:</h5>
 <p>
-WLAN:${details?.others?.WLAN ? details.others.WLAN :'not available'},
-Hotspot:${details.others?.hotspot ? details.others.hotspot :'not available'},
-Bluetooth:${details.others?.Bluetooth ? details.others.Bluetooth :'not available'},
-GPS:${details.others?.GPS ? details.others.GPS :'not available'},
-NFC:${details.others?.NFC ? details.others.NFC :'not available'},
-Radio:${details.others?.Radio ? details.others.Radio :'not available'},
-USB:${details.others?.USB ? details.others.USB :'not available'}
+<span class="fw-bold">WLAN:</span>${details?.others?.WLAN ? details.others.WLAN :'not available'},
+<span class="fw-bold">Hotspot:</span>${details.others?.hotspot ? details.others.hotspot :'not available'},
+<span class="fw-bold">Bluetooth:</span>${details.others?.Bluetooth ? details.others.Bluetooth :'not available'},
+<span class="fw-bold">GPS:</span>${details.others?.GPS ? details.others.GPS :'not available'},
+<span class="fw-bold">NFC:</span>${details.others?.NFC ? details.others.NFC :'not available'},
+<span class="fw-bold">Radio:</span>${details.others?.Radio ? details.others.Radio :'not available'},
+<span class="fw-bold">USB:</span>${details.others?.USB ? details.others.USB :'not available'}
 </p>
           </div>
       </div>

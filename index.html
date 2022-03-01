@@ -14,13 +14,14 @@
 </head>
 <body>
    
-        <h2 class="text-center mt-5">Phone Lovers</h2>
+        <h2 class="text-center mt-5 text-success">Phone Lovers</h2>
         <!-- .............SEARCH FIELD.................. -->
-    
+    <div class="container">
     <div class="input-group mb-3 mx-auto w-50 my-5 ">
-        <input id="search-input" type="text" class="form-control" placeholder="search your phone" aria-label="Recipient's username" aria-describedby="button-addon2">
-        <button id = "search-button" onclick="loadData()" class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+        <input id="search-input" type="text" class="form-control shadow" placeholder="search your phone" aria-label="Recipient's username" aria-describedby="button-addon2">
+        <button id = "search-button" onclick="loadData()" class="btn btn-success shadow" type="button" >Search</button>
       </div>
+    </div>
       <!-- .......SPINNER........... -->
       <div id="spinner"class="spinner-border mx-auto" role="status">
         <span class="visually-hidden">Loading...</span>
@@ -30,7 +31,7 @@
 
     <!-- ..............single phone details................ -->
  
-     <div class="container"> 
+     <div class="container mt-5 mb-5"> 
         <div class="card mx-auto" id="modal-dialog-box" style="display:none;width:80%;">
 
         </div>
@@ -40,13 +41,16 @@
 
       <!--........ ALL PHONES............. -->
     <div class="container">
-    <div id="phones" class="row row-cols-1 row-cols-md-3 g-4">
+    <div id="phones" class="row row-cols-1 row-cols-md-3 g-4 pb-5">
       
      
       
       
+      
     </div>
   </div>
+
+ 
         
       
 
