@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="container">
+   
         <h2 class="text-center mt-5">Phone Lovers</h2>
         <!-- .............SEARCH FIELD.................. -->
     
@@ -21,22 +21,45 @@
         <input id="search-input" type="text" class="form-control" placeholder="search your phone" aria-label="Recipient's username" aria-describedby="button-addon2">
         <button id = "search-button" onclick="loadData()" class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
       </div>
+      <!-- .......SPINNER........... -->
+      <div id="spinner"class="spinner-border mx-auto" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
       <!--................... ERROR MESSAGE ...................-->
       <div id="no-result"class="row text-center"></div>
-      <!--........ ALL PHONES............. -->
-      <div id="phones"class="row row-cols-1 row-cols-md-3 g-4 my-5">
-        
+
+    <!-- ..............single phone details................ -->
+ 
+     <div class="container"> 
+        <div class="card mx-auto" id="modal-dialog-box" style="display:none;width:80%;">
+
         </div>
+    </div> 
 
+ 
+
+      <!--........ ALL PHONES............. -->
+    <div class="container">
+    <div  id="phones" class="row row-cols-1 row-cols-md-3 g-4">
+      
+       
     </div>
+        
+      </div>
 
-    <!-- ..............MODAL................ -->
+     
+
+      
+
+    
+
+    
+
+   
   
  
   
-    <div id = "phone-details" class="card mb-3" style="max-width: 540px;">
-        
-      </div>
+    
 
 
   
