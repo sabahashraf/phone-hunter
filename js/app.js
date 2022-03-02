@@ -1,3 +1,4 @@
+
 const toggleSpinner=(show)=>{
 
     const spinner = document.getElementById('spinner');
@@ -16,17 +17,10 @@ const singlePhoneResult=(show)=>{
     spinner.style.display=show;
 
 }
-const noOfResults = results => {
-    const noResult = document.getElementById('no-result');
-    const p = document.createElement('p');
-    p.innerText = `${results.length} results found`;
-    noResult.appendChild(p);
-   
 
-}
 //loading all phones data
 
-const loadAllPhoneData = () => {
+const loadAllPhoneData = async() => {
     const seachInput = document.getElementById('search-input');
     const searchText = seachInput.value.toLowerCase();
     toggleSpinner('block');
@@ -35,6 +29,7 @@ const loadAllPhoneData = () => {
     if (searchText == "") {
       
         const noResult = document.getElementById('no-result');
+        noResult.textContent = '';
        
         const p = document.createElement('p');
        
@@ -43,13 +38,14 @@ const loadAllPhoneData = () => {
     }
     //fetching data for phones
     else{
-    const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
-    fetch(url)
-        .then(res => res.json())
-        .then(data => displayAllPhone(data.data));
-    seachInput.value = '';
-    const noResult = document.getElementById('no-result');
+        const noResult = document.getElementById('no-result');
     noResult.textContent = '';
+    const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
+    const res=await fetch(url);
+    const data=await res.json();
+       displayAllPhone(data.data);
+       
+   
     }
 }
 
@@ -72,7 +68,7 @@ const phoneOnPage=phones.slice(0,20);
         const div = document.createElement('div');
         div.classList.add("col-lg-4");
       
-        div.innerHTML = `<div class="card shadow border-0">
+        div.innerHTML = `<div class="card shadow border-0 ">
         <img src="${phone.image}" class="card-img-top w-75 p-2" alt="...">
         <div class="card-body">
           <h5 class="card-title">${phone.brand}</h5>
@@ -86,11 +82,79 @@ const phoneOnPage=phones.slice(0,20);
         phoneDisplay.appendChild(div);
 
     })
+    //creating a button to display more than 20 elements
+    if(phones.length >= 20){
+    const div=document.createElement('div');
+    div.classList.add="row";
+    div.innerHTML=`<button id="show"type="button" class="btn btn-info "  onclick='loadOtherData()'
+       >Show more</button>`;
+       phoneDisplay.appendChild(div);
+    }
+    else{
+    const seachInput = document.getElementById('search-input');
+    seachInput.value='';
+    
+    }
    
   
         
     }
+    //function shows how many result shows by search
+    const noOfResults = results => {
+        const noResult = document.getElementById('no-result');
+      
+        const p = document.createElement('p');
+        p.innerText = `${results.length} results found`;
+       
+        noResult.appendChild(p);
+        
+        
+    
+    }
 
+    //to display other phones loading data
+    const loadOtherData=async()=>{
+        const noResult = document.getElementById('no-result');
+        noResult.textContent = '';
+        const seachInput = document.getElementById('search-input');
+        const searchText = seachInput.value.toLowerCase();
+        const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
+    const res=await fetch(url);
+    const data=await res.json();
+       showOtherPhone(data.data);
+       seachInput.value='';
+      
+
+    }
+//to show other phones
+    const showOtherPhone=phones=>{
+        const btn=document.getElementById('show');
+        btn.style.display='none';
+        const restPhones =phones.slice(20);
+        const phoneDisplay = document.getElementById('phones');
+        
+    
+        
+        restPhones.forEach(phone => {
+            
+            const div = document.createElement('div');
+            div.classList.add("col-lg-4");
+          
+            div.innerHTML = `<div class="card shadow border-0">
+            <img src="${phone.image}" class="card-img-top w-75 p-2" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">${phone.brand}</h5>
+              <p class="card-text">${phone.phone_name}</p>
+              <button type="button" class="btn btn-success"  onclick="loadSinglePhoneData('${
+                phone.slug
+              }')">More Details</button>
+            </div>
+          </div>
+          `;
+            phoneDisplay.appendChild(div);
+    
+        })
+    }
 
    
 //loading single phone data
@@ -98,6 +162,8 @@ const phoneOnPage=phones.slice(0,20);
 
 
 const loadSinglePhoneData=id=>{
+    const noResult = document.getElementById('no-result');
+        noResult.textContent = '';
     const url = `https://openapi.programming-hero.com/api/phone/${id}`;
     fetch(url)
         .then(res => res.json())
@@ -107,7 +173,7 @@ const loadSinglePhoneData=id=>{
 //displaying single phone details
 
 const displaySinglePhoneDetails = details =>{
-    console.log(details);
+    
     const parentDetailsContainer = document.getElementById("modal-dialog-box");
     parentDetailsContainer.textContent = "";
     parentDetailsContainer.style.display='block';
